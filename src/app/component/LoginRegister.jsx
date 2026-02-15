@@ -42,8 +42,12 @@ const LoginRegister = ({ onBackHome }) => {
       localStorage.setItem("token", res.data.token);
       navigate("/dashboard");
     } catch (err) {
-      console.error(err.response?.data || err.message);
-      alert("Login Failed");
+      if (err.response?.status === 404) {
+        alert("User not found. Please register first.");
+        setActiveTab("register");
+      } else {
+        alert("Invalid email or password");
+      }
     }
   };
 
@@ -64,7 +68,7 @@ const LoginRegister = ({ onBackHome }) => {
       full_Name: username,
       email: registerEmail,
       password: registerPassword,
-      role_Id: 2,
+      role_Id: 3, // Default User
     };
 
     try {
@@ -74,8 +78,13 @@ const LoginRegister = ({ onBackHome }) => {
         },
       });
 
-      alert("Registration Successful");
-      navigate("/dashboard");
+      alert("Registration Successful. Please login.");
+      setActiveTab("login");
+
+      setUsername("");
+      setRegisterEmail("");
+      setRegisterPassword("");
+      setConfirmPassword("");
     } catch (err) {
       console.error(err.response?.data || err.message);
       alert("Registration Failed");

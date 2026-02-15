@@ -14,6 +14,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const DashboardLayout = ({ children }) => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const DashboardLayout = ({ children }) => {
   const [userMenuOpen, setUserMenuOpen] = useState(false); // user dropdown toggle
   const userMenuRef = useRef(null);
   const location = useLocation();
+  const [userInfo, setUserInfo] = useState(null);
 
   // Sidebar Menu Items
   const menuItems = [
@@ -59,9 +61,29 @@ const DashboardLayout = ({ children }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const decoded = jwtDecode(token);
+
+      setUserInfo({
+        username: decoded.username,
+        email: decoded.email,
+      });
+    } catch (error) {
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  }, [navigate]);
+
   return (
     <div className="min-h-screen flex bg-gray-100">
-
       {/* ================= SIDEBAR ================= */}
       <aside
         className={`fixed top-0 left-0 w-64 sm:w-72 h-full bg-white border-r 
@@ -114,15 +136,14 @@ const DashboardLayout = ({ children }) => {
 
       {/* ================= MAIN CONTENT ================= */}
       <div className="flex-1 lg:ml-64 flex flex-col h-screen">
-
         {/* ============ HEADER ============ */}
-        <header className="bg-white border-b border-gray-200 
+        <header
+          className="bg-white border-b border-gray-200 
         px-3 sm:px-6 py-2 sm:py-4 
-        flex justify-between items-center sticky top-0 z-50 w-full">
-
+        flex justify-between items-center sticky top-0 z-50 w-full"
+        >
           {/* LEFT SIDE */}
           <div className="flex items-center gap-2 sm:gap-3">
-
             {/* Mobile Menu Button */}
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -164,8 +185,8 @@ const DashboardLayout = ({ children }) => {
             {userMenuOpen && (
               <div className="absolute right-0 mt-2 w-52 sm:w-56 bg-white rounded-lg shadow-lg border z-50">
                 <div className="px-4 py-3 border-b">
-                  <p className="text-sm font-medium">John Doe</p>
-                  <p className="text-xs text-gray-500">john.doe@example.com</p>
+                  <p className="text-sm font-medium">{userInfo?.username}</p>
+                  <p className="text-xs text-gray-500"> {userInfo?.email}</p>
                 </div>
 
                 <button
@@ -199,10 +220,7 @@ const DashboardLayout = ({ children }) => {
         </header>
 
         {/* ============ PAGE CONTENT ============ */}
-        <main className="p-3 sm:p-6 flex-1 overflow-y-auto">
-          {children}
-        </main>
-
+        <main className="p-3 sm:p-6 flex-1 overflow-y-auto">{children}</main>
       </div>
     </div>
   );
