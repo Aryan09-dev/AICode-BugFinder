@@ -30,7 +30,7 @@ const LandingPage = ({ onNavigate }) => {
                                 <Code2 className="w-5 h-5 text-white" />
                             </div>
                             <span className="font-bold font-montserrat text-xl text-primaryText">
-                                BugAnalyzer AI
+                                WebsiteAnalyzer
                             </span>
                         </div>
                         {/* laptop view */}

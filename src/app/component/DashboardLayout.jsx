@@ -100,7 +100,7 @@ const DashboardLayout = ({ children }) => {
             <Code2 className="w-5 h-5 text-white" />
           </div>
           <span className="font-bold text-lg font-montserrat">
-            BugAnalyzer AI
+            WebsiteAnalyzer
           </span>
         </div>
 

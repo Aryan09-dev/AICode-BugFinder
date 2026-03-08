@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowLeft, Mail, User, EyeOff, Eye, Code2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { loginUser, registerUser } from "../../services/authservice";
 
 const LoginRegister = ({ onBackHome }) => {
   const [activeTab, setActiveTab] = useState("login");
@@ -26,19 +27,12 @@ const LoginRegister = ({ onBackHome }) => {
     }
 
     try {
-      const res = await axios.post(
-        `${BASE_URL}/auth/login`,
-        {
-          email: email,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      const loginData = {
+        email: email,
+        password: password,
+      };
 
+      const res = await loginUser(loginData);
       localStorage.setItem("token", res.data.token);
       navigate("/dashboard");
     } catch (err) {
@@ -72,11 +66,7 @@ const LoginRegister = ({ onBackHome }) => {
     };
 
     try {
-      const res = await axios.post(`${BASE_URL}/auth/register`, registerData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await registerUser(registerData);
 
       alert("Registration Successful. Please login.");
       setActiveTab("login");
@@ -109,7 +99,7 @@ const LoginRegister = ({ onBackHome }) => {
             <Code2 className="w-5 h-5 text-white" />
           </div>
           <h1 className="text-2xl font-semibold text-primaryText">
-            BugAnalyzer AI
+            WebsiteAnalyzer
           </h1>
         </div>
         {/* card  */}
