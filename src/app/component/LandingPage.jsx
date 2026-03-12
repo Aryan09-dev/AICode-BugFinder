@@ -41,8 +41,8 @@ const LandingPage = ({ onNavigate }) => {
                                 font-montserrat font-bold transition-colors ">Features</a>
                             <a href="#how-it-works" className="nav-link text-primaryText hover:text-brandBlue text-justify
                                 font-montserrat font-bold transition-colors ">How It Works</a>
-                            <a href="#reports" className="nav-link text-primaryText hover:text-brandBlue text-justify
-                                font-montserrat font-bold transition-colors ">Reports</a>
+                            {/* <a href="#reports" className="nav-link text-primaryText hover:text-brandBlue text-justify
+                                font-montserrat font-bold transition-colors ">Reports</a> */}
                             <button
                                 onClick={() => navigate("/login")}
                                 // className=" border-brandBlue text-white font-bold px-4 

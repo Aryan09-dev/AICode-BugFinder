@@ -83,6 +83,7 @@ const DashboardLayout = ({ children }) => {
   }, [navigate]);
 
   return (
+    // <div className="min-h-screen flex bg-gray-100 dark:bg-gray-950 dark:text-white transition-colors">
     <div className="min-h-screen flex bg-gray-100">
       {/* ================= SIDEBAR ================= */}
       <aside
