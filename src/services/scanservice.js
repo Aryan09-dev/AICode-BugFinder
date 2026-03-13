@@ -11,3 +11,9 @@ export const getScanResults = (scanId) => {
 export const getUserScans = () => {
   return api.get("/scan");
 };
+
+export const downloadScanReport = (scanId) => {
+  return api.get(`/scan/${scanId}/download`, {
+    responseType: "blob",
+  });
+};

@@ -152,7 +152,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* ================= RECENT SCANS TABLE ================= */}
-                <div className="p-6 bg-white shadow-sm rounded-xl">
+                {/* <div className="p-6 bg-white shadow-sm rounded-xl">
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="text-lg font-semibold">Recent Scans</h3>
                         <button
@@ -208,7 +208,7 @@ const Dashboard = () => {
 
                         </table>
                     </div>
-                </div>
+                </div> */}
 
             </div>
         </DashboardLayout>

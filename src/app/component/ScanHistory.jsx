@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Eye, Download, Trash2, Calendar, Search, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "./DashboardLayout";
-import { getUserScans } from "../../services/scanservice";
+import { getUserScans, downloadScanReport } from "../../services/scanservice";
 
 const ScanHistory = () => {
   const navigate = useNavigate();
@@ -88,6 +88,23 @@ const ScanHistory = () => {
     if (status === "failed") return `${base} bg-red-600`;
     if (status === "in process") return `${base} bg-blue-600`;
     return `${base} bg-gray-600`;
+  };
+
+  const handleDownload = async (scanId) => {
+    try {
+      const response = await downloadScanReport(scanId);
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.setAttribute("download", `scan_${scanId}.pdf`);
+
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error("Download failed", error);
+    }
   };
 
   return (
@@ -201,6 +218,7 @@ const ScanHistory = () => {
 
                       <button
                         disabled={scan.status !== "completed"}
+                        onClick={() => handleDownload(scan.id)}
                         className="p-2 border rounded hover:bg-gray-100 disabled:opacity-50"
                       >
                         <Download size={16} />
