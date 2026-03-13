@@ -59,7 +59,7 @@ const LandingPage = ({ onNavigate }) => {
                             </button>
                             <button
                                 // onClick={() => onNavigate("new-scan")}
-                                onClick={() => navigate("/new-scan")}
+                                onClick={() => navigate("/login")}
                                 className="flex items-center gap-2 px-4 py-2 rounded-md font-bold text-white
                                   bg-brandBlue  shadow-[inset_0.4px_1px_4px_rgba(255,255,255,0.25)]        
                                      transition-all duration-150  ease-[cubic-bezier(0.22,0.61,0.36,1)]    

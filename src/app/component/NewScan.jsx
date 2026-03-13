@@ -49,9 +49,7 @@ const NewScan = () => {
       setProgress(100);
 
       setTimeout(() => {
-        navigate("/scan-results", {
-          state: { result: response.data },
-        });
+        navigate(`/scan-results/${response.data.scanId}`);
       }, 500);
     } catch (error) {
       console.error(error.response?.data || error.message);
